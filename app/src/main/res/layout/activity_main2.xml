@@ -1,0 +1,68 @@
+<android.support.v4.view.ViewPager
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/pager"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" />
+<!--     <TabHost android:layout_width="fill_parent"
+	     android:layout_height="fill_parent"
+	     android:id="@+id/tabHost"
+	     xmlns:android="http://schemas.android.com/apk/res/android">
+    
+    <RelativeLayout android:orientation="vertical"
+			        android:layout_width="fill_parent"
+			        android:layout_height="fill_parent"
+			        android:padding="3dp">
+			        
+		<TabWidget android:layout_width="fill_parent"
+		    	   android:layout_height="wrap_content"
+		    	   android:id="@android:id/tabs"
+		    	   android:layout_alignParentBottom="true" />
+        
+    	<FrameLayout android:layout_width="fill_parent"
+			    	 android:layout_height="fill_parent"
+			    	 android:id="@android:id/tabcontent"
+			    	 android:layout_alignParentTop="true">
+    
+		    <LinearLayout android:layout_width="fill_parent"
+				    	  android:layout_height="wrap_content"
+				    	  android:id="@+id/tab1"
+				    	  android:orientation="vertical">
+	    	 
+			     <TextView android:layout_width="fill_parent" 
+				    	   android:layout_height="100px" 
+				    	   android:text="This is tab1"
+				    	   android:id="@+id/txt1"/>    
+	    
+	     	 </LinearLayout>
+	     
+		     <LinearLayout android:layout_width="fill_parent"
+				    	  android:layout_height="wrap_content"
+				    	  android:id="@+id/tab2"
+				    	  android:orientation="vertical">
+	    	 
+			     <TextView android:layout_width="fill_parent" 
+				    	   android:layout_height="100px" 
+				    	   android:text="This is tab2"
+				    	   android:id="@+id/txt2"/>    
+	    
+	     	 </LinearLayout>
+	     	 
+	     	 <LinearLayout android:layout_width="fill_parent"
+				    	  android:layout_height="wrap_content"
+				    	  android:id="@+id/tab3"
+				    	  android:orientation="vertical">
+	    	 
+			     <TextView android:layout_width="fill_parent" 
+				    	   android:layout_height="100px" 
+				    	   android:text="This is tab3"
+				    	   android:id="@+id/txt3"/>    
+	    
+	     	 </LinearLayout>
+	     	
+  	 	</FrameLayout>
+    
+	    
+		    	   
+	</RelativeLayout>
+	
+</TabHost> -->

@@ -1,0 +1,42 @@
+We have just setup 'tarucnavigator.netau.net' account.
+
+Note: If you have chosen to host your own domain you must update your nameservers to ns01.000webhost.com, ns02.000webhost.com
+You will see message 'Your website is up and running!' after visiting your domain once it will start working (usually in 24 hours after nameserver update).
+
+Visit your website: http://tarucnavigator.netau.net
+Access control panel at: http://members.000webhost.com/ (login with your email and password)
+
+
+*** General Account Details ***
+Domain: tarucnavigator.netau.net
+IP Address: 31.170.160.91
+Username: a7415220
+Password: ******
+
+
+*** File Upload Details ***
+FTP Hostname: ftp.tarucnavigator.netau.net or 31.170.160.91
+FTP Username: a7415220
+FTP Passsword: ******
+
+Files must be uploaded to 'public_html' folder.
+If you are not using FTP, you can access web based file manager from control panel.
+
+
+*** Website Builder Details ***
+You can find our Zyro Website Builder by navigating to cPanel and clicking Website Builder icon.
+
+
+*** MySQL Details ***
+Use mysql host 'mysql7.000webhost.com' for your PHP scripts.
+MySQL databases and users can be setup from control panel. 
+
+
+*** Where to get help? ***
+- Check our FAQ at: http://www.000webhost.com/faq.php
+- Browse our forum: http://www.000webhost.com/forum/
+- Submit ticket from members area
+
+Thanks again for choosing us! If you like our services, please add a link from your website to www.000webhost.com, and let your visitors to know, where to get the best free hosting :)
+
+Thank you,

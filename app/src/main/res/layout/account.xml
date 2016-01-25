@@ -1,0 +1,139 @@
+   <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+      android:layout_width="match_parent"
+      android:layout_height="fill_parent"
+      android:background="#ffffff"
+      android:orientation="vertical"
+     
+       > 
+       <ImageButton
+            android:id="@+id/imgbtnedit"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/edit"
+            android:background="#ffffff"
+           android:layout_gravity="right"
+           
+             />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+      <ImageButton
+            android:id="@+id/imgbtnsave"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/save"
+            android:background="#ffffff"
+           android:visibility="gone"
+           
+             />
+       <ImageButton
+            android:id="@+id/imgbtncancel"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="320dp"
+            android:src="@drawable/cancel"
+            android:background="#ffffff"
+      android:visibility="gone"
+              />
+       </RelativeLayout>
+   <LinearLayout 
+      android:layout_width="match_parent"
+      android:layout_height="fill_parent"
+      android:layout_marginTop="30dp"
+      android:orientation="vertical" 
+        android:layout_marginLeft="20dp"
+      >
+        <ImageView
+        android:id="@+id/imageView1"
+        
+        android:layout_width="100dp"
+        android:layout_height="70dp"
+     
+        android:longClickable="false"
+        android:src="@drawable/profile" 
+        android:layout_gravity="center_horizontal"/>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+        <EditText
+        android:id="@+id/currentPassword"
+        android:layout_width="270dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+         android:layout_marginLeft="10dp"
+        android:hint="Current Password"
+        android:drawableLeft="@drawable/password"
+        android:drawablePadding="10dp"
+        android:layout_marginTop="30dp"
+        android:inputType="textPassword"
+       android:visibility="gone"
+        >
+        <requestFocus />
+    </EditText>
+     <ImageButton
+            android:id="@+id/imgbtnconfirm"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+           android:layout_marginTop="30dp"
+           android:layout_marginLeft="280dp"
+            android:src="@drawable/tick"
+            android:background="#ffffff"
+      android:visibility="gone"
+              />
+        
+    </RelativeLayout>
+   
+    <EditText
+        android:id="@+id/emailValue"
+        android:layout_width="320dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:enabled="false"
+        android:drawableLeft="@drawable/email"
+        android:drawablePadding="10dp"
+        android:layout_marginTop="30dp"
+        android:inputType="textEmailAddress"
+        android:text="jospehchin@gmail.com" >
+        <requestFocus />
+    </EditText>
+    
+    
+
+   
+
+    <EditText
+        android:id="@+id/passwordValue"
+        android:layout_width="320dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:enabled="false"
+        android:drawableLeft="@drawable/password"
+        android:drawablePadding="10dp"
+        android:layout_marginTop="30dp"
+         android:inputType="textPassword"
+        android:text="12345678" />
+
+    <TextView
+        android:drawableLeft="@drawable/cancel"
+         android:drawablePadding="10dp"
+        android:id="@+id/delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="50dp"
+        android:clickable="true"
+        android:text="Delete Account"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#FF0000"
+        />
+
+    
+
+   
+</LinearLayout>
+
+</LinearLayout>

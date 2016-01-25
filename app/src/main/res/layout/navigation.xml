@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/loginlinear"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" 
+    android:background="@drawable/scm" >
+   
+<LinearLayout 
+    android:id="@+id/linearhide"
+    android:layout_width="400dp"
+            android:layout_height="40dp"
+        
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="30dp"
+            android:orientation="vertical"
+            android:background="#e8e8e7">
+
+    <ImageButton
+        android:id="@+id/imageButtonshow"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@drawable/show" 
+        android:background="#e8e8e7"
+        />
+
+   
+
+</LinearLayout>
+<LinearLayout android:layout_width="400dp"
+            android:layout_height="180dp"
+           android:id="@+id/linearshow"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="30dp"
+            android:orientation="vertical"
+            android:background="#e8e8e7"
+            android:visibility="gone"
+    >
+    <ImageButton
+         android:id="@+id/imageButtonhide"
+         android:layout_width="30dp"
+         android:layout_height="30dp"
+         android:src="@drawable/hide" 
+         android:background="#e8e8e7"
+         />
+     <EditText
+         android:id="@+id/txtFrom"
+         android:layout_width="300dp"
+         android:layout_height="40dp"
+         android:layout_alignParentRight="true"
+         android:layout_marginLeft="30dp"
+         android:layout_marginTop="8dp"
+      
+         android:hint="From"
+         android:background="@drawable/txt"
+         >
+
+     </EditText>
+     <EditText
+         android:id="@+id/txtTo"
+         android:layout_width="300dp"
+         android:layout_height="40dp"
+         android:layout_alignParentRight="true"
+         android:layout_marginLeft="30dp"
+         android:layout_marginTop="10dp"
+      
+         android:hint="To"
+         android:background="@drawable/txt">
+ 		
+ 
+     </EditText>
+
+     
+
+<Button
+    android:id="@+id/btnGo"
+    style="?android:attr/buttonStyleSmall"
+    android:layout_width="60dp"
+    android:layout_height="35dp"
+    android:layout_marginTop="10dp"
+    android:layout_marginLeft="265dp"
+    android:text="Go" 
+    android:background="@drawable/txt"
+    android:drawableRight="@drawable/arrright"
+    />
+
+     </LinearLayout>
+</LinearLayout>

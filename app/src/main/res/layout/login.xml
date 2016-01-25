@@ -1,0 +1,124 @@
+<!-- copyrighted content owned by Android Arena (www.androidarena.co.in)-->
+     <ScrollView
+           xmlns:android="http://schemas.android.com/apk/res/android"
+   			 xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/scrollView1"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="@drawable/greybackground" >
+
+         <LinearLayout
+             android:layout_width="fill_parent"
+             android:layout_height="fill_parent"
+             android:orientation="vertical"
+             >
+
+        
+        <LinearLayout android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="90dp"
+            android:layout_marginRight="16dp"
+           
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+           
+            >
+        	
+            <ImageView android:layout_width="70dp"
+                android:layout_height="70dp"
+               android:background="@drawable/ic_launcher"
+                android:layout_marginTop="15dp"
+                android:layout_gravity="center_horizontal"/>
+            
+             <EditText
+                 android:id="@+id/txtlusername"
+                 android:layout_width="280dp"
+                 android:layout_height="40dp"
+                 android:layout_marginTop="30dp"
+                 android:background="@drawable/txt"
+                 android:fontFamily="@android:string/copyUrl"
+                 android:hint="Username/Mobile/Email"
+                 android:paddingLeft="5dp"
+                 android:textSize="15dp" />
+             
+             <EditText
+                 android:id="@+id/txtlpassword"
+                 android:layout_width="280dp"
+                 android:layout_height="40dp"
+                 android:layout_marginTop="25dp"
+                 android:background="@drawable/txt"
+                 android:fontFamily="@android:string/copyUrl"
+                 android:hint="Password"
+                 android:inputType="textPassword"
+                 android:paddingLeft="5dp"
+                 android:textSize="15dp" />
+             
+             <LinearLayout
+       android:layout_marginTop="10dp"
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal"
+     android:gravity="center_horizontal"
+      >
+      
+      <TextView
+          android:id="@+id/reg"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="25dp"
+          android:fontFamily="@android:string/copyUrl"
+          android:text="Register Here"
+          android:textColor="#f2f2f2"
+          android:textSize="15dp"
+          android:textStyle="bold"
+          android:clickable="true"
+           />
+
+      <TextView 
+         android:layout_marginLeft="5dp"
+         android:layout_marginRight="5dp"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:textSize="14dp"
+          android:textColor="#f2f2f2"
+          android:text="|"
+          android:layout_marginTop="25dp"
+          android:textStyle="bold"
+          />
+
+      <TextView
+          android:id="@+id/forgot_password"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="25dp"
+          android:fontFamily="@android:string/copyUrl"
+          android:text="Forgot Password?"
+          android:textColor="#f2f2f2"
+          android:textSize="15dp"
+          android:textStyle="bold" />
+      
+  </LinearLayout>
+             
+               <Button
+                   android:id="@+id/btnSignin"
+                   android:layout_width="100dp"
+                   android:layout_height="38dp"
+                   android:layout_gravity="center_horizontal"
+                   android:layout_marginTop="25dp"
+                   android:background="@drawable/btn"
+                   android:fontFamily="@android:string/copyUrl"
+                   android:text="Sign In"
+                   android:textColor="#f2f2f2"
+                 
+                   android:textSize="13dp" />
+
+        </LinearLayout>
+        
+      
+    
+</LinearLayout>
+        
+    
+
+    </ScrollView>

@@ -1,0 +1,121 @@
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+      android:layout_width="match_parent"
+      android:layout_height="fill_parent"
+      android:background="#ffffff"
+      android:orientation="vertical"
+     
+       >
+
+        <ImageButton
+            android:id="@+id/imgbtnedit"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/edit"
+            android:background="#ffffff"
+           android:layout_gravity="right"
+           
+             />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+      <ImageButton
+            android:id="@+id/imgbtnsave"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/save"
+            android:background="#ffffff"
+           android:visibility="gone"
+           
+             />
+       <ImageButton
+            android:id="@+id/imgbtncancel"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="320dp"
+            android:src="@drawable/cancel"
+            android:background="#ffffff"
+      android:visibility="gone"
+              />
+       </RelativeLayout>
+   <LinearLayout 
+      android:layout_width="match_parent"
+      android:layout_height="fill_parent"
+      android:layout_marginTop="30dp"
+      android:orientation="vertical" 
+        android:layout_marginLeft="20dp"
+      >
+       <ImageView
+        android:id="@+id/imageView1"
+        
+        android:layout_width="100dp"
+        android:layout_height="70dp"
+     
+        android:longClickable="false"
+        android:src="@drawable/profile" 
+        android:layout_gravity="center_horizontal"/>
+        <EditText
+        android:id="@+id/usernameValue"
+        android:layout_width="320dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:enabled="false"
+        android:inputType="text"
+        android:text="Joseph Chin" 
+        android:drawableLeft="@drawable/user"
+        android:drawablePadding="10dp"
+        android:layout_marginTop="30dp"
+       
+        >
+
+        <requestFocus />
+    </EditText>
+    <EditText
+        android:id="@+id/genderValue"
+        android:layout_width="320dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:enabled="false"
+        android:inputType="text"
+        android:text="Male" 
+        android:drawableLeft="@drawable/gender"
+        android:drawablePadding="10dp"
+        android:layout_marginTop="30dp"
+        />
+
+    
+
+    <EditText
+        android:id="@+id/bdValue"
+        android:layout_width="320dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:enabled="false"
+        android:inputType="text"
+        android:text="12-12-1995"
+        android:drawableLeft="@drawable/birthdate"
+                android:drawablePadding="10dp"
+        android:layout_marginTop="30dp"
+         />
+
+    
+
+    <EditText
+        android:drawableLeft="@drawable/contacticon"
+        android:id="@+id/contactValue"
+        android:layout_width="320dp"
+        android:layout_height="wrap_content"
+         android:ems="10"
+        android:enabled="false"
+        android:inputType="text"
+        android:text="018-1234567" 
+        android:drawablePadding="10dp"
+        android:layout_marginTop="30dp"/>
+
+    
+
+   
+</LinearLayout>
+
+</LinearLayout>

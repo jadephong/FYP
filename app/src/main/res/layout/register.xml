@@ -1,0 +1,130 @@
+ <ScrollView
+           xmlns:android="http://schemas.android.com/apk/res/android"
+   			 xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/scrollView1"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" 
+             android:background="@drawable/greybackground">
+    <LinearLayout
+      
+         android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@drawable/greybackground"
+        android:orientation="vertical"
+        >
+
+        <LinearLayout android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="30dp"
+            android:orientation="vertical"
+            android:background="@drawable/btn"
+            >
+        	
+            <ImageView android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:background="@drawable/ic_launcher"
+                android:layout_marginTop="15dp"
+                android:layout_gravity="center_horizontal"/>
+            
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal|center_vertical"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@android:string/copyUrl"
+                android:text="TARUC Navigator"
+                android:textColor="#f2f2f2"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+             <EditText
+                 android:id="@+id/txtemail"
+                 android:layout_width="fill_parent"
+                 android:layout_height="40dp"
+                 android:layout_marginTop="30dp"
+                 android:background="@drawable/txt"
+                 android:fontFamily="@android:string/copyUrl"
+                 android:hint="Email"
+                 android:paddingLeft="5dp"
+                 android:textSize="15dp" />
+
+             <EditText
+                 android:id="@+id/txtusername"
+                 android:layout_width="fill_parent"
+                 android:layout_height="40dp"
+                 android:layout_marginTop="15dp"
+                 android:background="@drawable/txt"
+                 android:fontFamily="@android:string/copyUrl"
+                 android:hint="Username"
+                 android:paddingLeft="5dp" 
+                 android:textSize="15dp"/>
+
+             <EditText
+                 android:id="@+id/txtmobile"
+                 android:layout_width="fill_parent"
+                 android:layout_height="40dp"
+                 android:layout_marginTop="15dp"
+                 android:background="@drawable/txt"
+                 android:fontFamily="@android:string/copyUrl"
+                 android:hint="Mobile"
+                 android:paddingLeft="5dp"
+                 android:textSize="15dp" />
+
+             <EditText
+                 android:id="@+id/txtPassword"
+                 android:layout_width="fill_parent"
+                 android:layout_height="40dp"
+                 android:layout_marginTop="15dp"
+                 android:background="@drawable/txt"
+                 android:fontFamily="@android:string/copyUrl"
+                 android:hint="Password"
+                 android:inputType="textPassword"
+                 android:paddingLeft="5dp" 
+                 android:textSize="15dp"/>
+
+           <EditText
+               android:id="@+id/txtrPassword"
+               android:layout_width="fill_parent"
+               android:layout_height="40dp"
+               android:layout_marginTop="15dp"
+               android:background="@drawable/txt"
+               android:fontFamily="@android:string/copyUrl"
+               android:hint="Retype Password"
+               android:inputType="textPassword"
+               android:paddingLeft="5dp"
+               android:textSize="15dp" />
+         
+             <Button
+                 android:id="@+id/btnsignupp"
+                 android:layout_width="100dp"
+                 android:layout_height="45dp"
+                 android:layout_gravity="center_horizontal"
+                 android:layout_marginTop="16dp"
+                 android:background="@drawable/btn"
+                 android:fontFamily="@android:string/copyUrl"
+                 android:text="Sign Up"
+                 android:textColor="#f2f2f2" 
+                 android:textSize="13dp"/>
+            
+        </LinearLayout>
+        
+        <LinearLayout android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            
+            >
+        	
+           
+            
+            
+        </LinearLayout>
+             
+    
+</LinearLayout>
+        
+    
+
+    </ScrollView>
