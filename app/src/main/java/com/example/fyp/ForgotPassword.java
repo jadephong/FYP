@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,12 +28,10 @@ public class ForgotPassword extends Activity {
     private static final String senderEmail = "tarcnavigator2016@gmail.com";
     private static final String senderPassword = "navigator2016";
     DialogCustom dialog;
-    Toast Toast;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.forgot_password);
         dialog=new DialogCustom(this);
-        Toast.setGravity(Gravity.CENTER, 0, 0);
         getActionBar().hide();
         Button btnRecover = (Button) findViewById(R.id.btnRecover);
         btnRecover.setOnClickListener(new Button.OnClickListener() {

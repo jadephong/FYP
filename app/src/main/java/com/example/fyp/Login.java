@@ -24,7 +24,7 @@ import java.net.URL;
 
 public class Login extends Activity {
 	DialogCustom dialog;
-
+	private String username="";
 	protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(layout.login);
@@ -40,7 +40,7 @@ public class Login extends Activity {
 				// TODO Auto-generated method stub
 				EditText txtusername = (EditText) findViewById(id.txtlusername);
 				EditText txtPassword = (EditText) findViewById(id.txtlpassword);
-				String username = txtusername.getText().toString();
+				username = txtusername.getText().toString();
 				String password = txtPassword.getText().toString();
 
 				if (txtusername.getText().toString().length() < 1) {
@@ -135,10 +135,11 @@ public class Login extends Activity {
 				String s = result.trim();
 				loadingDialog.dismiss();
 				if(s.equalsIgnoreCase("welcome back")){
-					Intent intent = new Intent(Login.this, MainActivity2.class);
-					/*intent.putExtra(USER_NAME, username);*/
 
+					Intent intent = new Intent(Login.this, MainActivity2.class);
+					intent.putExtra("username", username);
 					startActivity(intent);
+
 				}else if(s.equalsIgnoreCase("connect failed")){
 					Toast.makeText(Login.this, "Please Check Your Connection!", Toast.LENGTH_LONG).show();
 				}

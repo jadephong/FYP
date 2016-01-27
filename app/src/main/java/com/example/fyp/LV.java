@@ -1,26 +1,26 @@
 package com.example.fyp;
 
 import android.app.ActionBar;
-import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
 public class LV extends ListActivity {
 	 ListView listView ;
+     private String username;
 	 String[] values = new String[] { "User Profile","Account","About","Log Out"
             };
      @Override
      protected void onCreate(Bundle savedInstanceState) {
          super.onCreate(savedInstanceState);
          setContentView(R.layout.setting);
+         username= getIntent().getStringExtra("username");
          ActionBar ab = getActionBar(); 
          ab.setDisplayHomeAsUpEnabled(true);
          ab.setTitle(Html.fromHtml("<font color='#000000'>Settings </font>"));
@@ -33,8 +33,9 @@ public class LV extends ListActivity {
                public void onListItemClick(ListView parent,View v,int position,long id){
             	   
             	   if(position==0){
-            		   Intent intent = new Intent(LV.this,UserProfile.class);
-            		   startActivity(intent);
+                       Intent intent = new Intent(LV.this, UserProfile.class);
+                       intent.putExtra("username", username);
+                       startActivity(intent);
             		   
             	   }
             	   else if(position==1){
