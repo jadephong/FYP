@@ -3,12 +3,14 @@ package com.example.fyp;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -32,12 +34,14 @@ public class Login extends Activity {
 
         getActionBar().hide();
      // Login
-        Button login = (Button)findViewById(id.btnSignin);
+        final Button login = (Button)findViewById(id.btnSignin);
         login.setOnClickListener(new Button.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
+				InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+				imm.hideSoftInputFromWindow(login.getApplicationWindowToken(), 0);
 				EditText txtusername = (EditText) findViewById(id.txtlusername);
 				EditText txtPassword = (EditText) findViewById(id.txtlpassword);
 				username = txtusername.getText().toString();
@@ -82,7 +86,7 @@ public class Login extends Activity {
 
 			}});
 	}
-	private void login(final String param, String password) {
+	public void login(final String param, String password) {
 		String urlSuffix=null;
 		if(param.contains("@")){
 			 urlSuffix = "?email="+param+"&password="+password;

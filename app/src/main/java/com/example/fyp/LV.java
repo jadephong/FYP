@@ -40,6 +40,7 @@ public class LV extends ListActivity {
             	   }
             	   else if(position==1){
             		   Intent intent1 = new Intent(LV.this,Account.class);
+                       intent1.putExtra("username", username);
             		   startActivity(intent1);
             		   
             	   }

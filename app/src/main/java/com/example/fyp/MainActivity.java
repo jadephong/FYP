@@ -2,6 +2,7 @@ package com.example.fyp;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -28,13 +30,14 @@ public class MainActivity extends Activity {
         setContentView(R.layout.register);
 
         getActionBar().hide();
-        Button signup = (Button)findViewById(R.id.btnsignupp);
+        final Button signup = (Button)findViewById(R.id.btnsignupp);
 
         signup.setOnClickListener(new Button.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
+
 				EditText txtemail = (EditText) findViewById(R.id.txtemail);
 				EditText txtusername = (EditText) findViewById(R.id.txtusername);
 				EditText txtPassword = (EditText) findViewById(R.id.txtPassword);
@@ -44,7 +47,8 @@ public class MainActivity extends Activity {
 				String password = txtPassword.getText().toString().trim().toLowerCase();
 				String email = txtemail.getText().toString().trim().toLowerCase();
 				String mobile = txtmobile.getText().toString().trim().toLowerCase();
-
+				InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+				imm.hideSoftInputFromWindow(signup.getApplicationWindowToken(), 0);
 				if(email.length()<1) {
 					Toast.makeText(MainActivity.this, "Email field cannot be empty", Toast.LENGTH_SHORT).show();
 					 return;

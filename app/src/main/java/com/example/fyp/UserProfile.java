@@ -2,8 +2,11 @@ package com.example.fyp;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Html;
@@ -12,9 +15,16 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.fyp.R.layout;
 
@@ -22,41 +32,38 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Locale;
 
 public class UserProfile extends Activity {
 	private String username;
 	private EditText txt_username;
-	private EditText txt_gender;
+	private Spinner spinner_gender;
 	private EditText txt_DOB;
 	private EditText txt_phone_num;
-	private EditText txt_email;
-
-	public String getTxt_email() {
-		return txt_email.getText().toString();
-	}
-
-	public void setTxt_email(String txt_email1) {
-		String email=txt_email.getText().toString();
-		email= txt_email1;
-	}
-
-	private static final String TAG_RESULTS="result";
 	ArrayList<HashMap<String, String>> userList;
-	JSONArray users = null;
+	private DatePickerDialog datepicker;
+	private SimpleDateFormat dateFormatter;
+	private String ori_email;
 	protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(layout.userprofile);
+		dateFormatter = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
 		username= getIntent().getStringExtra("username");
 		userList = new ArrayList<HashMap<String,String>>();
         ActionBar ab = getActionBar(); 
         ab.setDisplayHomeAsUpEnabled(true);
         ab.setTitle(Html.fromHtml("<font color='#000000'>User Profile </font>"));
-		getUsers(username);
+		try {
+			getUsers(username);
+		}catch(Exception e){
+			Log.e("Get", e.getMessage(), e);
+		}
         int keyCode = 0;
 			 
 			 if(keyCode == KeyEvent.KEYCODE_BACK) {
@@ -65,69 +72,144 @@ public class UserProfile extends Activity {
 			 
 			 else
 			 {
+
 				 txt_username = (EditText) findViewById(R.id.usernameValue);
-			     txt_gender = (EditText) findViewById(R.id.genderValue);
+			     spinner_gender = (Spinner) findViewById(R.id.genderValue);
+				 spinner_gender.setEnabled(false);
 				 txt_DOB = (EditText) findViewById(R.id.bdValue);
+				 Calendar newCalendar = Calendar.getInstance();
+				 datepicker = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+
+					 public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+						 Calendar newDate = Calendar.getInstance();
+						 newDate.set(year, monthOfYear, dayOfMonth);
+						 txt_DOB.setText(dateFormatter.format(newDate.getTime()));
+					 }
+
+				 },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
+
+				 txt_DOB.setOnClickListener(new TextView.OnClickListener() {
+					 @Override
+					 public void onClick(View v) {
+						 datepicker.show();
+					 }
+				 });
+
 				 txt_phone_num = (EditText) findViewById(R.id.contactValue);
-			 
-			final ImageButton save = (ImageButton)findViewById(R.id.imgbtnsave);
-			final ImageButton cancel = (ImageButton)findViewById(R.id.imgbtncancel);
-			
-			final ImageButton btn_edit = (ImageButton)findViewById(R.id.imgbtnedit);
+
+				 final ImageButton save = (ImageButton)findViewById(R.id.imgbtnsave);
+				 final ImageButton cancel = (ImageButton)findViewById(R.id.imgbtncancel);
+				 final ImageButton btn_edit = (ImageButton)findViewById(R.id.imgbtnedit);
+
+
+				 ArrayAdapter<CharSequence> staticAdapter = ArrayAdapter
+						 .createFromResource(getApplicationContext(), R.array.gender_array, R.layout.simple_spinner_item);
+				 staticAdapter
+						 .setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
+				 spinner_gender.setAdapter(staticAdapter);
+				 spinner_gender.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+					 @Override
+					 public void onItemSelected(AdapterView<?> parent, View view,
+												int position, long id) {
+						 ((TextView) parent.getChildAt(0)).setTextColor(Color.GRAY);
+						 if (spinner_gender.isEnabled() == true) {
+							 ((TextView) parent.getChildAt(0)).setTextColor(Color.BLACK);
+						 } else {
+							 ((TextView) parent.getChildAt(0)).setTextColor(Color.GRAY);
+						 }
+
+						 switch (position) {
+							 case 0:
+								 spinner_gender.setSelection(0);
+								 break;
+							 case 1:
+								 spinner_gender.setSelection(1);
+								 break;
+							 case 2:
+								 spinner_gender.setSelection(2);
+								 break;
+
+						 }
+					 }
+
+					 @Override
+					 public void onNothingSelected(AdapterView<?> parent) {
+
+					 }
+				 });
 				 btn_edit.setOnClickListener(new Button.OnClickListener() {
 
-				@Override
-				public void onClick(View v) { 
-			
-			txt_username.setEnabled(true);
-			txt_gender.setEnabled(true);
-			txt_DOB.setEnabled(true);
-			txt_phone_num.setEnabled(true);
+					 @Override
+					 public void onClick(View v) {
+						 txt_username.setEnabled(true);
+						 spinner_gender.setEnabled(true);
+						 txt_DOB.setEnabled(true);
+						 txt_DOB.setText("");
+						 txt_DOB.setKeyListener(null);
+						 txt_phone_num.setEnabled(true);
+						 btn_edit.setVisibility(ImageButton.GONE);
+						 save.setVisibility(ImageButton.VISIBLE);
+						 cancel.setVisibility(ImageButton.VISIBLE);
+					 }
+				 });
 
-					btn_edit.setVisibility(ImageButton.GONE);
-			save.setVisibility(ImageButton.VISIBLE);
-			cancel.setVisibility(ImageButton.VISIBLE);
-				}
-			});
-			
-			save.setOnClickListener(new Button.OnClickListener() {
+				 save.setOnClickListener(new Button.OnClickListener() {
 
-			@Override
-			public void onClick(View v) {
-				txt_username.setText(txt_username.getText().toString());
-				txt_gender.setText(txt_gender.getText().toString());
-				txt_DOB.setText(txt_DOB.getText().toString());
-				txt_phone_num.setText(txt_phone_num.getText().toString());
-				
-				txt_username.setEnabled(false);
-     			txt_gender.setEnabled(false);
-     			txt_DOB.setEnabled(false);
-     			txt_phone_num.setEnabled(false);
+					 @Override
+					 public void onClick(View v) {
+						 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+						 imm.hideSoftInputFromWindow(save.getApplicationWindowToken(), 0);
+						 Validator validator=new Validator();
+						 String validate_username= txt_username.getText().toString();
+						 String phone_num=txt_phone_num.getText().toString();
 
-				btn_edit.setVisibility(ImageButton.VISIBLE);
-     			save.setVisibility(ImageButton.GONE);
-     			cancel.setVisibility(ImageButton.GONE);
-				
-			}
-				
-			});
-			
-			cancel.setOnClickListener(new Button.OnClickListener() {
+						  if(validator.isOnlyChar(validate_username)!=true) {
+							 Toast.makeText(UserProfile.this, "Only Character Allow For Username ", Toast.LENGTH_SHORT).show();
+							 return;
+						 }
 
-			@Override
-			public void onClick(View v) {
-				txt_username.setEnabled(false);
-     			txt_gender.setEnabled(false);
-     			txt_DOB.setEnabled(false);
-     			txt_phone_num.setEnabled(false);
+						 else if(validator.validatePhoneNum(phone_num)!=true){
+							 Toast.makeText(UserProfile.this, "Not A Valid Phone Number", Toast.LENGTH_SHORT).show();
+							 return;
+						 }
 
-				btn_edit.setVisibility(ImageButton.VISIBLE);
-     			save.setVisibility(ImageButton.GONE);
-     			cancel.setVisibility(ImageButton.GONE);
-				
-			}
-				
-			});
+						 else {
+							  try {
+								  updateUser();
+								  getUsers(username);
+							  } catch (Exception e) {
+								  Log.e("Update", e.getMessage(), e);
+							  }
+						  }
+						 txt_username.setEnabled(false);
+						 spinner_gender.setEnabled(false);
+						 txt_DOB.setEnabled(false);
+						 txt_phone_num.setEnabled(false);
+
+						 btn_edit.setVisibility(ImageButton.VISIBLE);
+						 save.setVisibility(ImageButton.GONE);
+						 cancel.setVisibility(ImageButton.GONE);
+
+					 }
+
+				 });
+
+				 cancel.setOnClickListener(new Button.OnClickListener() {
+
+					 @Override
+					 public void onClick(View v) {
+						 txt_username.setEnabled(false);
+						 spinner_gender.setEnabled(false);
+						 txt_DOB.setEnabled(false);
+						 txt_phone_num.setEnabled(false);
+
+						 btn_edit.setVisibility(ImageButton.VISIBLE);
+						 save.setVisibility(ImageButton.GONE);
+						 cancel.setVisibility(ImageButton.GONE);
+
+					 }
+
+				 });
 			 }
       /*  getActionBar().hide();*/
 }
@@ -147,12 +229,14 @@ public class UserProfile extends Activity {
 			String phone_num = c.getString("phone_num");
 			String email = c.getString("email");
 			txt_username.setText(username);
-			txt_DOB.setText(dob);
-			txt_gender.setText(gender);
+			if(!dob.equals("null")) {
+				txt_DOB.setText(dob);
+			}
+			ori_email=email;
+			ArrayAdapter genderAdapter = (ArrayAdapter) spinner_gender.getAdapter();
+			int spinnerPosition = genderAdapter.getPosition(gender);
+			spinner_gender.setSelection(spinnerPosition);
 			txt_phone_num.setText(phone_num);
-			txt_email.setText(email);
-			Email emailClass=new Email();
-			emailClass.setEmail(email);
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
@@ -183,7 +267,11 @@ public class UserProfile extends Activity {
 				super.onPostExecute(s);
 				loading.dismiss();
 				try {
-					showUsers(s);
+					if(s.equalsIgnoreCase("connect failed")){
+						Toast.makeText(UserProfile.this, "Please Check Your Connection!", Toast.LENGTH_LONG).show();
+					}else {
+						showUsers(s);
+					}
 				}catch (Exception e){
 					Log.e("SendMail", e.getMessage(), e);
 				}
@@ -193,14 +281,67 @@ public class UserProfile extends Activity {
 			protected String doInBackground(String... params) {
 				String param = params[0];
 				RequestHandler rh = new RequestHandler();
-				String s1 = rh.sendGetRequestParam("http://jstarcnavigator.esy.es/andriod_user_api/getUserDetails.php",param);
-				return s1;
+				if(Validator.checknetwork(getApplicationContext())!=false) {
+					String s1 = rh.sendGetRequestParam("http://jstarcnavigator.esy.es/andriod_user_api/getUserDetails.php", param);
+					return s1;
+				}
+				else{
+					return "connect failed";
+				}
 			}
 		}
 		GetUser gu = new GetUser();
 		gu.execute(urlSuffix);
 	}
+	private void updateUser(){
+		final String email = ori_email.trim();
+		final String username = txt_username.getText().toString().trim();
+		final String phone_num = txt_phone_num.getText().toString().trim();
+		final String gender = spinner_gender.getSelectedItem().toString();
+		final String DOB = txt_DOB.getText().toString();
+		class UpdateUser extends AsyncTask<Void,Void,String>{
+			ProgressDialog loading;
+			@Override
+			protected void onPreExecute() {
+				super.onPreExecute();
+				loading =ProgressDialog.show(UserProfile.this, "", "Please Wait...", true);
+			}
 
+			@Override
+			protected void onPostExecute(String s) {
+				super.onPostExecute(s);
+				loading.dismiss();
+				if(s.equalsIgnoreCase("connect failed")){
+					Toast.makeText(UserProfile.this, "Please Check Your Connection!", Toast.LENGTH_LONG).show();
+				}else {
+					Toast.makeText(UserProfile.this, s, Toast.LENGTH_LONG).show();
+				}
+			}
+
+			@Override
+			protected String doInBackground(Void... params) {
+
+				HashMap<String,String> param = new HashMap<String,String>();
+				param.put("email",email);
+				param.put("username",username);
+				param.put("phone_num",phone_num);
+				param.put("gender",gender);
+				param.put("DOB",DOB);
+				param.put("ori_email",email);
+				RequestHandler rh = new RequestHandler();
+				if(Validator.checknetwork(getApplicationContext())!=false) {
+					String res = rh.sendPostRequest("http://jstarcnavigator.esy.es/andriod_user_api/updateUser.php", param);
+					return res;
+				}
+				else{
+					return "connect failed";
+				}
+			}
+		}
+
+		UpdateUser uu = new UpdateUser();
+		uu.execute();
+	}
 	@Override
     public boolean onCreateOptionsMenu(Menu menu) {
         
@@ -220,18 +361,4 @@ public class UserProfile extends Activity {
              return super.onOptionsItemSelected(item); 
     	 }
     	 }
-	public class Email implements Serializable {
-
-		private String email ;
-
-		public String getEmail() {
-			return email;
-		}
-
-		public void setEmail(String email) {
-			this.email = email;
-		}
-
-
-	}
 }

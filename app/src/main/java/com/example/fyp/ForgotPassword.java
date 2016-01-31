@@ -25,8 +25,6 @@ import java.util.Random;
  */
 public class ForgotPassword extends Activity {
     private static final String URL = "http://jstarcnavigator.esy.es/andriod_user_api/checkemailexist.php";
-    private static final String senderEmail = "tarcnavigator2016@gmail.com";
-    private static final String senderPassword = "navigator2016";
     DialogCustom dialog;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

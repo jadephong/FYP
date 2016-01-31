@@ -1,3 +1,10 @@
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    >
+
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
       android:layout_width="match_parent"
       android:layout_height="fill_parent"
@@ -62,44 +69,40 @@
         android:ems="10"
         android:enabled="false"
         android:inputType="text"
-        android:text="Joseph Chin" 
-        android:drawableLeft="@drawable/user"
+            android:drawableLeft="@drawable/user"
         android:drawablePadding="10dp"
         android:layout_marginTop="30dp"
        
         >
-
-        <requestFocus />
     </EditText>
-    <EditText
-        android:id="@+id/genderValue"
-        android:layout_width="320dp"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:enabled="false"
-        android:inputType="text"
-        android:text="Male" 
-        android:drawableLeft="@drawable/gender"
-        android:drawablePadding="10dp"
-        android:layout_marginTop="30dp"
-        />
 
-    
+       <Spinner
+           android:id="@+id/genderValue"
+           android:layout_width="320dp"
+           android:layout_height="wrap_content"
+           android:ems="10"
+           android:enabled="false"
+           android:inputType="text"
+           android:background="@drawable/gradient_spinner"
+           android:paddingLeft="40dp"
+           android:textColor="@color/gray"
+           android:layout_marginTop="30dp" />
 
-    <EditText
+
+       <EditText
         android:id="@+id/bdValue"
         android:layout_width="320dp"
         android:layout_height="wrap_content"
         android:ems="10"
         android:enabled="false"
         android:inputType="text"
-        android:text="12-12-1995"
         android:drawableLeft="@drawable/birthdate"
-                android:drawablePadding="10dp"
+           android:text="Not Set"
+           android:drawablePadding="10dp"
         android:layout_marginTop="30dp"
          />
 
-    
+
 
     <EditText
         android:drawableLeft="@drawable/contacticon"
@@ -109,8 +112,8 @@
          android:ems="10"
         android:enabled="false"
         android:inputType="text"
-        android:text="018-1234567" 
         android:drawablePadding="10dp"
+        android:onClick="setDate"
         android:layout_marginTop="30dp"/>
 
     
@@ -118,4 +121,4 @@
    
 </LinearLayout>
 
-</LinearLayout>
+</LinearLayout>    </ScrollView>
