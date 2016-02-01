@@ -6,10 +6,15 @@ import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.text.Html;
+import android.util.Base64;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -22,6 +27,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,7 +38,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.net.URLDecoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -50,9 +60,18 @@ public class UserProfile extends Activity {
 	private DatePickerDialog datepicker;
 	private SimpleDateFormat dateFormatter;
 	private String ori_email;
+	private ImageView imageView;
+	private Bitmap bitmap;
+	private Uri filePath;
+	private ImageButton imgbtnupload;
+	private  ImageButton btnconfirm;
+	private  ImageButton btn_edit;
 	protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(layout.userprofile);
+		btnconfirm=(ImageButton) findViewById(R.id.btnconfirm);
+		imgbtnupload=(ImageButton) findViewById(R.id.imgbtnupload);
+		imageView=(ImageView) findViewById(R.id.imageView1);
 		dateFormatter = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
 		username= getIntent().getStringExtra("username");
 		userList = new ArrayList<HashMap<String,String>>();
@@ -60,6 +79,7 @@ public class UserProfile extends Activity {
         ab.setDisplayHomeAsUpEnabled(true);
         ab.setTitle(Html.fromHtml("<font color='#000000'>User Profile </font>"));
 		try {
+			getImage(username);
 			getUsers(username);
 		}catch(Exception e){
 			Log.e("Get", e.getMessage(), e);
@@ -99,7 +119,7 @@ public class UserProfile extends Activity {
 
 				 final ImageButton save = (ImageButton)findViewById(R.id.imgbtnsave);
 				 final ImageButton cancel = (ImageButton)findViewById(R.id.imgbtncancel);
-				 final ImageButton btn_edit = (ImageButton)findViewById(R.id.imgbtnedit);
+				 btn_edit = (ImageButton)findViewById(R.id.imgbtnedit);
 
 
 				 ArrayAdapter<CharSequence> staticAdapter = ArrayAdapter
@@ -137,6 +157,27 @@ public class UserProfile extends Activity {
 
 					 }
 				 });
+				 imgbtnupload.setOnClickListener(new ImageButton.OnClickListener() {
+					 @Override
+					 public void onClick(View v) {
+						 try {
+							 showFileChooser();
+							 btnconfirm.setVisibility(ImageButton.VISIBLE);
+							 btn_edit.setVisibility(ImageButton.GONE);
+							btnconfirm.setOnClickListener(new ImageButton.OnClickListener() {
+								 @Override
+								 public void onClick(View v) {
+									 uploadImage();
+
+
+								 }
+							 });
+						 } catch (Exception e) {
+							 Log.e("File", e.getMessage(), e);
+						 }
+
+					 }
+				 });
 				 btn_edit.setOnClickListener(new Button.OnClickListener() {
 
 					 @Override
@@ -144,7 +185,6 @@ public class UserProfile extends Activity {
 						 txt_username.setEnabled(true);
 						 spinner_gender.setEnabled(true);
 						 txt_DOB.setEnabled(true);
-						 txt_DOB.setText("");
 						 txt_DOB.setKeyListener(null);
 						 txt_phone_num.setEnabled(true);
 						 btn_edit.setVisibility(ImageButton.GONE);
@@ -159,28 +199,24 @@ public class UserProfile extends Activity {
 					 public void onClick(View v) {
 						 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 						 imm.hideSoftInputFromWindow(save.getApplicationWindowToken(), 0);
-						 Validator validator=new Validator();
-						 String validate_username= txt_username.getText().toString();
-						 String phone_num=txt_phone_num.getText().toString();
+						 Validator validator = new Validator();
+						 String validate_username = txt_username.getText().toString();
+						 String phone_num = txt_phone_num.getText().toString();
 
-						  if(validator.isOnlyChar(validate_username)!=true) {
+						 if (validator.isOnlyChar(validate_username) != true) {
 							 Toast.makeText(UserProfile.this, "Only Character Allow For Username ", Toast.LENGTH_SHORT).show();
 							 return;
-						 }
-
-						 else if(validator.validatePhoneNum(phone_num)!=true){
+						 } else if (validator.validatePhoneNum(phone_num) != true) {
 							 Toast.makeText(UserProfile.this, "Not A Valid Phone Number", Toast.LENGTH_SHORT).show();
 							 return;
+						 } else {
+							 try {
+								 updateUser();
+								 getUsers(username);
+							 } catch (Exception e) {
+								 Log.e("Update", e.getMessage(), e);
+							 }
 						 }
-
-						 else {
-							  try {
-								  updateUser();
-								  getUsers(username);
-							  } catch (Exception e) {
-								  Log.e("Update", e.getMessage(), e);
-							  }
-						  }
 						 txt_username.setEnabled(false);
 						 spinner_gender.setEnabled(false);
 						 txt_DOB.setEnabled(false);
@@ -342,6 +378,133 @@ public class UserProfile extends Activity {
 		UpdateUser uu = new UpdateUser();
 		uu.execute();
 	}
+
+	private void showFileChooser() {
+		Intent intent = new Intent();
+		intent.setType("image/*");
+		intent.setAction(Intent.ACTION_GET_CONTENT);
+		startActivityForResult(Intent.createChooser(intent, "Select Picture"), 1);
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+
+		if (requestCode == 1 && resultCode == RESULT_OK && data != null && data.getData() != null) {
+
+			filePath = data.getData();
+			try {
+				bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
+				Bitmap b1=Bitmap.createScaledBitmap(
+						bitmap, 500, 500, false);
+				RoundImage roundedImage = new RoundImage(b1);
+				imageView.setImageDrawable(roundedImage);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	public String getStringImage(Bitmap bmp){
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		Bitmap b1=bmp.createScaledBitmap(
+				bitmap, 500, 500, false);
+		b1.compress(Bitmap.CompressFormat.JPEG, 50, baos);
+		byte[] imageBytes = baos.toByteArray();
+		String encodedImage = Base64.encodeToString(imageBytes, Base64.DEFAULT);
+		return encodedImage;
+	}
+
+	private void uploadImage(){
+		class UploadImage extends AsyncTask<Bitmap,Void,String>{
+
+			ProgressDialog loading;
+			RequestHandler rh = new RequestHandler();
+
+			@Override
+			protected void onPreExecute() {
+				super.onPreExecute();
+				loading =ProgressDialog.show(UserProfile.this, "", "Uploading Image...", true);
+			}
+
+			@Override
+			protected void onPostExecute(String s) {
+				super.onPostExecute(s);
+				getImage(username);
+				loading.dismiss();
+				Toast.makeText(getApplicationContext(),s,Toast.LENGTH_LONG).show();
+				imgbtnupload.setVisibility(ImageButton.VISIBLE);
+				btn_edit.setVisibility(ImageButton.VISIBLE);
+				btnconfirm.setVisibility(ImageButton.GONE);
+			}
+
+			@Override
+			protected String doInBackground(Bitmap... params) {
+				Bitmap bitmap = params[0];
+				String uploadImage = getStringImage(bitmap);
+
+				HashMap<String,String> data = new HashMap<String,String>();
+				data.put("image", uploadImage);
+				data.put("ori_email", ori_email);
+				String result = rh.sendPostRequest("http://jstarcnavigator.esy.es/andriod_user_api/uploadImage.php",data);
+
+				return result;
+			}
+		}
+
+		UploadImage ui = new UploadImage();
+		ui.execute(bitmap);
+	}
+
+	public void getImage(String param) {
+		String urlSuffix=null;
+		if(param.contains("@")){
+			urlSuffix = "?email="+param;
+		}
+		else if(param.matches("\\d+")){
+			urlSuffix = "?phone_num="+param;
+		}
+		else if(param.matches("[a-zA-Z]+")){
+			urlSuffix = "?username="+param;
+		}
+		class GetImage extends AsyncTask<String,Void,Bitmap>{
+			ProgressDialog loading;
+
+			@Override
+			protected void onPreExecute() {
+				super.onPreExecute();
+				loading =ProgressDialog.show(UserProfile.this, "", "Please Wait...", true);
+			}
+
+			@Override
+			protected void onPostExecute(Bitmap b) {
+				super.onPostExecute(b);
+				loading.dismiss();
+				RoundImage roundedImage = new RoundImage(b);
+				imageView.setImageDrawable(roundedImage);
+			}
+
+			@Override
+			protected Bitmap doInBackground(String... params) {
+				String s = params[0];
+				String add = "http://jstarcnavigator.esy.es/andriod_user_api/getImage.php"+s;
+				URL url = null;
+				Bitmap image = null;
+				try {
+					url = new URL(add);
+					image = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+				} catch (MalformedURLException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				return image;
+			}
+		}
+
+		GetImage gi = new GetImage();
+		gi.execute(urlSuffix);
+	}
 	@Override
     public boolean onCreateOptionsMenu(Menu menu) {
         
@@ -361,4 +524,10 @@ public class UserProfile extends Activity {
              return super.onOptionsItemSelected(item); 
     	 }
     	 }
+	@Override
+	public void onBackPressed() {
+		Intent intent1 = new Intent(UserProfile.this,LV.class);
+		intent1.putExtra("username", username);
+		startActivity(intent1);
+	}
 }

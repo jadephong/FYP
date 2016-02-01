@@ -435,5 +435,10 @@ public class Account extends Activity {
              return super.onOptionsItemSelected(item); 
     	 }
     }
-       
+	@Override
+	public void onBackPressed() {
+		Intent intent1 = new Intent(Account.this,LV.class);
+		intent1.putExtra("username", username);
+		startActivity(intent1);
+	}
 }

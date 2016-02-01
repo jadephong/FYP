@@ -11,9 +11,11 @@ import android.view.MenuItem;
 import com.example.fyp.R.layout;
 
 public class About extends Activity {
+    private String username;
 	protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(layout.about);
+        username= getIntent().getStringExtra("username");
         ActionBar ab = getActionBar(); 
         ab.setDisplayHomeAsUpEnabled(true);
         ab.setTitle(Html.fromHtml("<font color='#000000'>About </font>"));
@@ -38,5 +40,10 @@ public class About extends Activity {
                return super.onOptionsItemSelected(item); 
       	 }
       }
-       
+    @Override
+    public void onBackPressed() {
+        Intent intent1 = new Intent(About.this,LV.class);
+        intent1.putExtra("username", username);
+        startActivity(intent1);
+    }
 }
