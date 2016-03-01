@@ -8,8 +8,6 @@
                 android:centerColor="#f2f2f2"
                 android:endColor="#cccccc"
                 android:angle="270" />
-          
-            
             <padding
                 android:left="10dp"
                 android:top="10dp"

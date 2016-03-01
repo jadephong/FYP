@@ -3,9 +3,13 @@ package com.example.fyp;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.widget.EditText;
+import android.support.v4.view.ViewPager;
 
 public class PagerAdapter extends FragmentPagerAdapter {
+ NavigationFragment navigationFragment = null;
+ TrackingFragment trackingFragment = null;
+ MessagingFragment messagingFragment = null;
+ ViewPager viewpager = null;
 
  public PagerAdapter(FragmentManager fm) {
   super(fm);
@@ -13,22 +17,25 @@ public class PagerAdapter extends FragmentPagerAdapter {
  }
 
  @Override
- public Fragment getItem(int arg0) {
-  // TODO Auto-generated method stub
-  switch (arg0) {
-  case 0:
-	 
-  return new NavigationFragment();
-  
-  case 1:
-   return new TrackingFragment();
-  case 2:
-   return new MessagingFragment();
+ public Fragment getItem(int position) {
 
-  default:
-   break;
+  Fragment f = new Fragment();
+
+  switch (position) {
+   case 0:
+    navigationFragment = new NavigationFragment();
+    f = navigationFragment;
+    break;
+   case 1:
+    trackingFragment = new TrackingFragment();
+    f = trackingFragment;
+    break;
+   case 2:
+    messagingFragment = new MessagingFragment();
+    f = messagingFragment;
+    break;
   }
-  return null;
+  return f;
  }
 
  @Override
@@ -36,7 +43,6 @@ public class PagerAdapter extends FragmentPagerAdapter {
   // TODO Auto-generated method stub
   return 3;
  }
-
 
 }
 

@@ -12,17 +12,14 @@
     <string name="tab_title_1">Navigate</string>
      <string name="tab_title_2">Track</string>
       <string name="tab_title_3">Message</string>
-    <string name="drawer_open">Slider Menu Opened</string>
-    <string name="drawer_close">Slider Menu Closed</string>
-
     <string-array name="gender_array">
         <item>Not Set</item>
         <item>Female</item>
         <item>Male</item>
     </string-array>
     <string name="date_picker_result_value">Year: %1$s\nMonth: %2$s\nDay: %3$s</string>
-
-   
+    <string name="google_app_id">AIzaSyA2xWNW0GzNnr8Y186-UgqXWiYvDmtQLFk</string>
+    <string name="gcm_senderId">222802726448</string>
 
  
 </resources>

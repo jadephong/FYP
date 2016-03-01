@@ -12,38 +12,41 @@ import com.example.fyp.R.layout;
 
 public class About extends Activity {
     private String username;
-	protected void onCreate(Bundle savedInstanceState) {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(layout.about);
-        username= getIntent().getStringExtra("username");
-        ActionBar ab = getActionBar(); 
+        username = getIntent().getStringExtra("username");
+        ActionBar ab = getActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
         ab.setTitle(Html.fromHtml("<font color='#000000'>About </font>"));
         ab.setBackgroundDrawable(getResources().getDrawable(R.drawable.actionbar));
-}//
-	@Override
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        
-        // Inflate the menu; this adds items to the action bar if it is present.
-       /* getMenuInflater().inflate(R.menu.main, menu);*/
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-      	 switch (item.getItemId()) {
-           case android.R.id.home:
-               Intent intent=new Intent(this,LV.class);
-               startActivity(intent);
-               return true;
-               default:
-               return super.onOptionsItemSelected(item); 
-      	 }
-      }
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                Intent intent = new Intent(this, LV.class);
+                intent.putExtra("username", username);
+                startActivity(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
     @Override
     public void onBackPressed() {
-        Intent intent1 = new Intent(About.this,LV.class);
-        intent1.putExtra("username", username);
-        startActivity(intent1);
+        super.onBackPressed();
+        Intent intent = new Intent(this, LV.class);
+        intent.putExtra("username", username);
+        startActivity(intent);
     }
 }

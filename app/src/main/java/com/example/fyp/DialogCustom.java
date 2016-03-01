@@ -1,10 +1,8 @@
 package com.example.fyp;
 
 import android.content.Context;
-import android.view.View;
 
-import com.gitonway.lee.niftymodaldialogeffects.lib.Effectstype;
-import com.gitonway.lee.niftymodaldialogeffects.lib.NiftyDialogBuilder;
+import cn.pedant.SweetAlert.SweetAlertDialog;
 
 /**
  * Created by jadephong on 24/1/2016.
@@ -16,24 +14,31 @@ public class DialogCustom
     {
         this.context=context;
     }
-    public NiftyDialogBuilder alert(){
-        final NiftyDialogBuilder dialogBuilder;
-        dialogBuilder = NiftyDialogBuilder.getInstance(context);
-        dialogBuilder
-                .withTitleColor("#FFFFFFFF") //def
-                .withDividerColor("#FFFFFFFF")
-                .withMessageColor("#FFFFFF")
-                .withDialogColor("#4c4c4c")
-                .isCancelableOnTouchOutside(true)
-                .withDuration(700)
-                .setButton1Click(new View.OnClickListener() {
+    public void alert(String title,String content){
+        new SweetAlertDialog(context, SweetAlertDialog.ERROR_TYPE)
+                .setTitleText(title)
+                .setContentText(content)
+                .show();
+    }
+    public SweetAlertDialog confimation(String title,String content) {
+        SweetAlertDialog sweetAlertDialog= new SweetAlertDialog(context, SweetAlertDialog.WARNING_TYPE)
+                .setTitleText(title)
+                .setContentText(content)
+                .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
                     @Override
-                    public void onClick(View v) {
-                        dialogBuilder.dismiss();
+                    public void onClick(SweetAlertDialog sDialog) {
+                        sDialog.cancel();
                     }
                 })
-                .withEffect(Effectstype.Shake);
+                .setConfirmText("Yes!");
 
-        return dialogBuilder;
+        return sweetAlertDialog;
+    }
+
+    public void success(String title,String content){
+        new SweetAlertDialog(context, SweetAlertDialog.SUCCESS_TYPE)
+                .setTitleText(title)
+                .setContentText(content)
+                .show();
     }
 }

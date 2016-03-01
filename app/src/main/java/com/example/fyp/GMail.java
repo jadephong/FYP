@@ -15,20 +15,20 @@ public class GMail extends javax.mail.Authenticator {
 
     private String[] recipients;
     private String randomPassword;
-    private static String  senderEmail = "tarcnavigator2016@gmail.com";
+    private static String senderEmail = "tarcnavigator2016@gmail.com";
     private static String senderPassword = "navigator2016";
     private static String host = "smtp.googlemail.com";
-    private static String port  = "587";
-    private static String subject= "Tarc Navigator Password Recovery";
+    private static String port = "587";
+    private static String subject = "Tarc Navigator Password Recovery";
 
 
-    public static void main(String ... args) {
+    public static void main(String... args) {
         GMail.sendMail(new String[]{"jadephong1008@gmail.com"}, "123");
     }
 
     public static boolean sendMail(String[] recipients, String randomPassword) {
-        String[] s2=null;
-        for(String parts : recipients) {
+        String[] s2 = null;
+        for (String parts : recipients) {
             s2 = parts.split("@");
         }
         String body = "Hi " + s2[0] + ",\n\n" +
@@ -37,53 +37,51 @@ public class GMail extends javax.mail.Authenticator {
                 "Password:" + randomPassword +
                 "\n\nRegards,\nTarcNavigator";
         //This is for google
-      if(  GMail.sendMail(senderEmail, senderPassword,host,
-              port, "true", "true",
+        if (GMail.sendMail(senderEmail, senderPassword, host,
+                port, "true", "true",
                 true, "javax.net.ssl.SSLSocketFactory", "false",
-                 recipients,
+                recipients,
                 subject,
-                body)){
+                body)) {
             return true;
+        } else {
+            return false;
         }
-        else{
-          return false;
-      }
 
     }
+
     public synchronized static boolean sendMail(
             String userName, String passWord, String host,
             String port, String starttls, String auth,
             boolean debug, String socketFactoryClass, String fallback,
             String[] to,
-            String subject, String text)
-    {
+            String subject, String text) {
         Properties props = new Properties();
         //Properties props=System.getProperties();
         props.put("mail.smtp.user", userName);
         props.put("mail.smtp.host", host);
-        if(!"".equals(port))
+        if (!"".equals(port))
             props.put("mail.smtp.port", port);
-        if(!"".equals(starttls))
-            props.put("mail.smtp.starttls.enable",starttls);
+        if (!"".equals(starttls))
+            props.put("mail.smtp.starttls.enable", starttls);
         props.put("mail.smtp.auth", auth);
-        if(debug) {
+        if (debug) {
             props.put("mail.smtp.debug", "true");
         } else {
             props.put("mail.smtp.debug", "false");
         }
 
-        if(!"".equals(fallback))
+        if (!"".equals(fallback))
             props.put("mail.smtp.socketFactory.fallback", fallback);
         props.put("mail.smtp.starttls.enable", "true");
-        try
-        {
+        try {
             Session session = Session.getDefaultInstance(props, null);
             session.setDebug(debug);
             MimeMessage msg = new MimeMessage(session);
             msg.setText(text);
             msg.setSubject(subject);
             msg.setFrom(new InternetAddress(senderEmail));
-            for(int i=0;i<to.length;i++) {
+            for (int i = 0; i < to.length; i++) {
                 msg.addRecipient(Message.RecipientType.TO,
                         new InternetAddress(to[i]));
             }
@@ -93,9 +91,7 @@ public class GMail extends javax.mail.Authenticator {
             transport.sendMessage(msg, msg.getAllRecipients());
             transport.close();
             return true;
-        }
-        catch (Exception mex)
-        {
+        } catch (Exception mex) {
             mex.printStackTrace();
             return false;
         }
